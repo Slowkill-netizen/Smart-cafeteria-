@@ -1,121 +1,135 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app">
+      {/* Navigation */}
+      <header className="navbar">
+        <div className="logo">
+          <span className="logo-icon">🍽️</span>
+          <span>Smart Cafeteria</span>
         </div>
-        <div>
-          <h1>Get started</h1>
+
+        <nav className="nav-links">
+          <a href="#home">Home</a>
+          <a href="#menu">Menu</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#about">About</a>
+        </nav>
+
+        <div className="nav-actions">
+          <button className="login-button">Login</button>
+          <button className="register-button">Register</button>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <main>
+        <section className="hero" id="home">
+          <div className="hero-content">
+            <p className="hero-label">SMART • FAST • SECURE</p>
+
+            <h1>
+              Order Food.
+              <br />
+              <span>Skip the Queue.</span>
+            </h1>
+
+            <p className="hero-description">
+              Order your meals digitally, make secure payments and collect
+              your food using a unique order code.
+            </p>
+
+            <div className="hero-buttons">
+              <button className="primary-button">
+                Browse Today's Menu
+              </button>
+
+              <button className="secondary-button">
+                How It Works
+              </button>
+            </div>
+          </div>
+
+          <div className="hero-card">
+            <div className="food-icon">🍛</div>
+            <h3>Today's Special</h3>
+            <p>Fresh meals ready for you</p>
+
+            <div className="food-details">
+              <span>Fast service</span>
+              <span>✓ Secure</span>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section className="how-it-works" id="how-it-works">
+          <div className="section-heading">
+            <p>HOW IT WORKS</p>
+            <h2>Three simple steps</h2>
+            <span>
+              From ordering to collecting your meal, everything is simple.
+            </span>
+          </div>
+
+          <div className="steps">
+            <div className="step-card">
+              <div className="step-number">1</div>
+              <h3>Choose Your Food</h3>
+              <p>
+                Browse the available meals and add the food you want to your
+                order.
+              </p>
+            </div>
+
+            <div className="step-card">
+              <div className="step-number">2</div>
+              <h3>Pay Securely</h3>
+              <p>
+                Confirm your order and make your payment through the available
+                payment method.
+              </p>
+            </div>
+
+            <div className="step-card">
+              <div className="step-number">3</div>
+              <h3>Collect Your Food</h3>
+              <p>
+                Receive a unique order code and present it when collecting
+                your meal.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* About */}
+        <section className="about" id="about">
+          <div>
+            <p className="section-label">WHY SMART CAFETERIA?</p>
+            <h2>A better way to manage school meals.</h2>
+          </div>
+
           <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+            Our system is designed to reduce long queues, improve payment
+            tracking, reduce food collection errors and give the cafeteria
+            better control over orders and sales.
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        </section>
+      </main>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+      {/* Footer */}
+      <footer className="footer">
+        <div className="logo">
+          <span className="logo-icon">🍽️</span>
+          <span>Smart Cafeteria</span>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <p>Making campus meals simpler.</p>
+
+        <span>© 2026 Smart Cafeteria</span>
+      </footer>
+    </div>
   )
 }
 
