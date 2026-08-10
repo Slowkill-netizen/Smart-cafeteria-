@@ -1,253 +1,187 @@
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+
 import './App.css'
-import cafeteriaFood from './assets/cafeteria-food.jpg'
 
-function App() {
+import Menu from './pages/Menu'
+import Cart from './pages/Cart'
+
+import { CartProvider } from './context/CartContext'
+
+
+// ==========================================
+// HOME / LANDING PAGE
+// ==========================================
+
+function Home() {
   return (
-    <div className="app">
+    <div className="home-page">
 
-      {/* ================= NAVIGATION ================= */}
-      <header className="navbar">
+      {/* ====================================
+          NAVIGATION
+      ==================================== */}
 
-        <div className="brand">
-          <div className="brand-image">
-            <img src={cafeteriaFood} alt="JOOUST cafeteria meal" />
-          </div>
+      <nav className="navbar">
 
-          <div className="brand-text">
-            <h2>JOOUST</h2>
-            <span>SMART CAFETERIA</span>
-          </div>
+        <div className="nav-logo">
+          JOOUST
         </div>
 
-        <nav className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#menu">Menu</a>
-          <a href="#how-it-works">How It Works</a>
-          <a href="#about">About</a>
-        </nav>
+        <div className="nav-links">
 
-        <div className="nav-actions">
-          <button className="login-button">
-            Login
-          </button>
+          <Link to="/">
+            Home
+          </Link>
 
-          <button className="register-button">
-            Register
-          </button>
+          <Link to="/menu">
+            Menu
+          </Link>
+
+          <Link to="/cart">
+            Cart
+          </Link>
+
         </div>
 
-      </header>
+      </nav>
 
 
-      {/* ================= HERO ================= */}
-      <main>
+      {/* ====================================
+          HERO SECTION
+      ==================================== */}
 
-        <section className="hero" id="home">
+      <section className="hero">
 
-          <div className="hero-content">
+        <div className="hero-content">
 
-            <p className="university-label">
-              JARAMOGI OGINGA ODINGA UNIVERSITY
-              <br />
-              OF SCIENCE AND TECHNOLOGY
-            </p>
-
-            <p className="system-label">
-              SMART CAFETERIA SYSTEM
-            </p>
-
-            <h1>
-              Your Campus Meals,
-              <br />
-              <span>Made Smarter.</span>
-            </h1>
-
-            <p className="hero-description">
-              Order your meals digitally, make secure payments
-              and collect your food using a verified order code —
-              reducing unnecessary queues and improving cafeteria
-              accountability.
-            </p>
-
-            <div className="hero-buttons">
-
-              <button className="primary-button">
-                View Today's Menu
-              </button>
-
-              <button className="secondary-button">
-                How It Works
-              </button>
-
-            </div>
-
-          </div>
-
-
-          {/* FOOD IMAGE */}
-          <div className="hero-food">
-
-            <div className="food-image-wrapper">
-
-              <img
-                src={cafeteriaFood}
-                alt="Meal served at the JOOUST cafeteria"
-              />
-
-              <div className="food-badge">
-                <strong>Fresh Meals</strong>
-                <span>Ready to Order</span>
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        {/* ================= HOW IT WORKS ================= */}
-
-        <section
-          className="how-it-works"
-          id="how-it-works"
-        >
-
-          <div className="section-heading">
-
-            <p>SMART DINING</p>
-
-            <h2>
-              From order to collection,
-              <br />
-              everything is simple.
-            </h2>
-
-            <span>
-              A faster and more accountable way for JOOUST
-              students to get their meals.
-            </span>
-
-          </div>
-
-
-          <div className="steps">
-
-            <div className="step-card">
-
-              <div className="step-number">
-                01
-              </div>
-
-              <h3>
-                Choose Your Food
-              </h3>
-
-              <p>
-                Browse the available cafeteria meals and
-                add what you want to your order.
-              </p>
-
-            </div>
-
-
-            <div className="step-card">
-
-              <div className="step-number">
-                02
-              </div>
-
-              <h3>
-                Pay Securely
-              </h3>
-
-              <p>
-                Confirm your order and make your payment
-                through the available payment method.
-              </p>
-
-            </div>
-
-
-            <div className="step-card">
-
-              <div className="step-number">
-                03
-              </div>
-
-              <h3>
-                Collect Your Food
-              </h3>
-
-              <p>
-                Present your unique order verification
-                code when your meal is ready.
-              </p>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        {/* ================= ABOUT ================= */}
-
-        <section
-          className="about"
-          id="about"
-        >
-
-          <div>
-
-            <p className="section-label">
-              WHY SMART CAFETERIA?
-            </p>
-
-            <h2>
-              Built for a smarter
-              campus dining experience.
-            </h2>
-
-          </div>
-
-          <p>
-            The JOOUST Smart Cafeteria system is designed
-            to reduce long queues, improve payment tracking,
-            minimize food collection errors and give the
-            cafeteria better control over orders and sales.
+          <p className="hero-label">
+            JARAMOGI OGINGA ODINGA UNIVERSITY
+            OF SCIENCE AND TECHNOLOGY
           </p>
 
-        </section>
+          <h1>
+            Welcome to
+            <br />
+            JOOUST Smart Cafeteria
+          </h1>
 
-      </main>
+          <p className="hero-description">
+            Order your favourite meals conveniently,
+            avoid long queues, and enjoy a faster
+            cafeteria experience.
+          </p>
+
+          <Link
+            to="/menu"
+            className="hero-button"
+          >
+            View Today's Menu
+          </Link>
+
+        </div>
+
+      </section>
 
 
-      {/* ================= FOOTER ================= */}
+      {/* ====================================
+          FEATURES
+      ==================================== */}
+
+      <section className="features">
+
+        <div className="feature-card">
+
+          <div className="feature-icon">
+            🍽️
+          </div>
+
+          <h2>
+            Easy Ordering
+          </h2>
+
+          <p>
+            Browse available meals and place your
+            order before reaching the cafeteria.
+          </p>
+
+        </div>
+
+
+        <div className="feature-card">
+
+          <div className="feature-icon">
+            ⚡
+          </div>
+
+          <h2>
+            Save Time
+          </h2>
+
+          <p>
+            Reduce waiting time and avoid unnecessary
+            queues during busy meal periods.
+          </p>
+
+        </div>
+
+
+        <div className="feature-card">
+
+          <div className="feature-icon">
+            🔐
+          </div>
+
+          <h2>
+            Secure Orders
+          </h2>
+
+          <p>
+            Every order will have a unique digital
+            identity for secure collection.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      {/* ====================================
+          CALL TO ACTION
+      ==================================== */}
+
+      <section className="home-cta">
+
+        <h2>
+          Hungry?
+        </h2>
+
+        <p>
+          Check what's available today and
+          place your order.
+        </p>
+
+        <Link
+          to="/menu"
+          className="hero-button"
+        >
+          Browse Menu
+        </Link>
+
+      </section>
+
+
+      {/* ====================================
+          FOOTER
+      ==================================== */}
 
       <footer className="footer">
 
-        <div className="footer-brand">
-
-          <div className="footer-logo">
-            <img
-              src={cafeteriaFood}
-              alt="Smart Cafeteria"
-            />
-          </div>
-
-          <div>
-            <strong>JOOUST SMART CAFETERIA</strong>
-
-            <p>
-              Oasis of Knowledge
-            </p>
-          </div>
-
-        </div>
+        <p>
+          © 2026 JOOUST Smart Cafeteria
+        </p>
 
         <p>
-          © 2026 JOOUST Smart Cafeteria System
+          Jaramogi Oginga Odinga University
+          of Science and Technology
         </p>
 
       </footer>
@@ -255,5 +189,60 @@ function App() {
     </div>
   )
 }
+
+
+// ==========================================
+// MAIN APP
+// ==========================================
+
+function App() {
+
+  return (
+
+    <BrowserRouter>
+
+      {/* ====================================
+          CART PROVIDER
+          
+          Everything inside this provider
+          can access the shopping cart.
+      ==================================== */}
+
+      <CartProvider>
+
+        <Routes>
+
+          {/* HOME */}
+
+          <Route
+            path="/"
+            element={<Home />}
+          />
+
+
+          {/* MENU */}
+
+          <Route
+            path="/menu"
+            element={<Menu />}
+          />
+
+
+          {/* CART */}
+
+          <Route
+            path="/cart"
+            element={<Cart />}
+          />
+
+        </Routes>
+
+      </CartProvider>
+
+    </BrowserRouter>
+
+  )
+}
+
 
 export default App
