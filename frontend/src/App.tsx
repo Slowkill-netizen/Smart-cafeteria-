@@ -1,37 +1,49 @@
-import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+} from "react-router-dom";
 
-import './App.css'
+import "./App.css";
 
-import Menu from './pages/Menu'
-import Cart from './pages/Cart'
-import Checkout from './pages/Checkout'
+import Menu from "./pages/Menu";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 
-import { CartProvider } from './context/CartContext'
+import StudentLogin from "./pages/StudentLogin";
+import StudentSignup from "./pages/StudentSignup";
+import StudentDashboard from "./pages/StudentDashboard";
+import AdminLogin from "./pages/AdminLogin";
 
-import heroImg from './assets/hero.png'
+import { CartProvider } from "./context/CartContext";
 
 
-// =====================================================
+// ==========================================================
 // HOME / LANDING PAGE
-// =====================================================
+// ==========================================================
 
 function Home() {
 
-  // ===================================================
+  // ========================================================
   // TYPEWRITER EFFECT
-  // ===================================================
+  // ========================================================
 
-  const fullText = 'Welcome to the JOOUST Smart Cafeteria'
+  const fullText = "Welcome to the JOOUST Smart Cafeteria";
 
-  const [typedText, setTypedText] = useState('')
+  const [typedText, setTypedText] = useState("");
 
-  const [profileOpen, setProfileOpen] = useState(false)
+  // ========================================================
+  // PROFILE DROPDOWN
+  // ========================================================
+
+  const [profileOpen, setProfileOpen] = useState(false);
 
 
   useEffect(() => {
 
-    let currentIndex = 0
+    let currentIndex = 0;
 
     const typingInterval = setInterval(() => {
 
@@ -39,34 +51,36 @@ function Home() {
 
         setTypedText(
           fullText.substring(0, currentIndex + 1)
-        )
+        );
 
-        currentIndex++
+        currentIndex++;
 
       } else {
 
-        clearInterval(typingInterval)
+        clearInterval(typingInterval);
 
       }
 
-    }, 70)
+    }, 75);
 
-    return () => clearInterval(typingInterval)
 
-  }, [])
+    return () => {
+      clearInterval(typingInterval);
+    };
+
+  }, []);
 
 
   return (
-
     <div className="home-page">
 
-      {/* =================================================
+      {/* ====================================================
           NAVIGATION BAR
-      ================================================= */}
+      ==================================================== */}
 
       <header className="navbar">
 
-        {/* BRAND */}
+        {/* LOGO */}
 
         <Link
           to="/"
@@ -103,13 +117,16 @@ function Home() {
             Home
           </Link>
 
+
           <Link to="/menu">
             Menu
           </Link>
 
+
           <a href="#about">
             About
           </a>
+
 
           <a href="#contact">
             Contact
@@ -119,6 +136,7 @@ function Home() {
           {/* SEARCH */}
 
           <button
+            type="button"
             className="nav-icon-button"
             aria-label="Search"
             title="Search"
@@ -132,10 +150,9 @@ function Home() {
           <div className="profile-wrapper">
 
             <button
+              type="button"
               className="profile-button"
-              onClick={() =>
-                setProfileOpen(!profileOpen)
-              }
+              onClick={() => setProfileOpen(!profileOpen)}
               aria-label="Account"
               title="Account"
             >
@@ -151,17 +168,43 @@ function Home() {
                   Welcome
                 </div>
 
+
                 <p>
-                  Sign in to manage your orders.
+                  Choose how you want to access the cafeteria.
                 </p>
 
-                <button className="dropdown-login">
-                  Login
-                </button>
 
-                <button className="dropdown-signup">
-                  Sign Up
-                </button>
+                {/* STUDENT LOGIN */}
+
+                <Link
+                  to="/student-login"
+                  className="dropdown-button student-login"
+                  onClick={() => setProfileOpen(false)}
+                >
+                  Student Login
+                </Link>
+
+
+                {/* ADMIN LOGIN */}
+
+                <Link
+                  to="/admin-login"
+                  className="dropdown-button admin-login"
+                  onClick={() => setProfileOpen(false)}
+                >
+                  Admin Login
+                </Link>
+
+
+                {/* STUDENT SIGN UP */}
+
+                <Link
+                  to="/student-signup"
+                  className="dropdown-button signup-button"
+                  onClick={() => setProfileOpen(false)}
+                >
+                  Student Sign Up
+                </Link>
 
               </div>
 
@@ -176,6 +219,7 @@ function Home() {
             to="/cart"
             className="cart-nav-button"
             title="Shopping Cart"
+            aria-label="Shopping Cart"
           >
             🛒
           </Link>
@@ -185,88 +229,65 @@ function Home() {
       </header>
 
 
-      {/* =================================================
+      {/* ====================================================
           MAIN CONTENT
-      ================================================= */}
+      ==================================================== */}
 
       <main>
 
-
-        {/* =================================================
-            WELCOME HEADING
-        ================================================= */}
-
-        <section className="welcome-section">
-
-          <h1>
-
-            {typedText}
-
-            <span className="typing-cursor">
-              |
-            </span>
-
-          </h1>
-
-          <div className="welcome-decoration">
-
-            <span></span>
-
-            <b>✦</b>
-
-            <span></span>
-
-          </div>
-
-        </section>
-
-
-        {/* =================================================
-            HERO FOOD SECTION
-        ================================================= */}
+        {/* ==================================================
+            HERO
+        ================================================== */}
 
         <section className="hero-section">
 
+          {/* WELCOME HEADING */}
+
+          <div className="welcome-heading">
+
+            <h1 className="typing-title">
+
+              {typedText}
+
+              <span className="typing-cursor">
+                |
+              </span>
+
+            </h1>
+
+          </div>
+
+
+          {/* HERO BOX */}
+
           <div className="hero-box">
 
+            {/* LEFT SIDE */}
 
-            {/* LEFT SIDE - TEXT */}
-
-            <div className="hero-content">
-
+            <div className="hero-left">
 
               <p className="hero-label">
-                ✧ FRESH & DELICIOUS
+                SMART CAFETERIA
               </p>
 
 
-              <h2 className="hero-title">
+              <h2 className="hero-slogan">
 
                 Fresh Meals.
-
                 <br />
 
-                Good <span>Mood.</span>
+                <span>
+                  Good Mood.
+                </span>
 
               </h2>
-
-
-              <div className="hero-divider">
-
-                <span></span>
-
-                <b>♥</b>
-
-                <span></span>
-
-              </div>
 
 
               <p className="hero-description">
 
                 Welcome to the JOOUST Smart Cafeteria —
-                a simple and convenient way to order
-                your favourite meals, pay securely and enjoy.
+                a simple and convenient way to order your
+                favourite meals, pay securely and enjoy.
 
               </p>
 
@@ -280,7 +301,9 @@ function Home() {
                   className="primary-button"
                 >
                   View Menu
-                  <span>→</span>
+                  <span>
+                    →
+                  </span>
                 </Link>
 
 
@@ -294,14 +317,14 @@ function Home() {
               </div>
 
 
-              {/* TRUST FEATURES */}
+              {/* TRUST */}
 
               <div className="hero-trust">
 
-                <div>
+                <div className="trust-item">
 
                   <span className="trust-icon">
-                    ♧
+                    ✓
                   </span>
 
                   <span>
@@ -311,10 +334,10 @@ function Home() {
                 </div>
 
 
-                <div>
+                <div className="trust-item">
 
                   <span className="trust-icon">
-                    ♢
+                    ✓
                   </span>
 
                   <span>
@@ -324,10 +347,10 @@ function Home() {
                 </div>
 
 
-                <div>
+                <div className="trust-item">
 
                   <span className="trust-icon">
-                    ◷
+                    ✓
                   </span>
 
                   <span>
@@ -341,26 +364,47 @@ function Home() {
             </div>
 
 
-            {/* RIGHT SIDE - FOOD IMAGE */}
+            {/* RIGHT SIDE - IMAGE */}
 
-            <div className="hero-image-wrapper">
+            <div className="hero-right">
 
-              <img
-                src="\food-hero.jpg"
-                alt="Delicious meal served at JOOUST Smart Cafeteria"
-                className="hero-image"
-              />
+              <div className="food-image-wrapper">
+
+                <img
+                  src="/food-hero.jpg"
+                  alt="Fresh cafeteria meal"
+                  className="hero-food-image"
+                />
+
+              </div>
 
             </div>
 
           </div>
 
+
+          {/* FLOATING DECORATIONS */}
+
+          <div className="floating-shape shape-one">
+            ✦
+          </div>
+
+
+          <div className="floating-shape shape-two">
+            ✦
+          </div>
+
+
+          <div className="floating-shape shape-three">
+            🍃
+          </div>
+
         </section>
 
 
-        {/* =================================================
+        {/* ==================================================
             HOW IT WORKS
-        ================================================= */}
+        ================================================== */}
 
         <section
           className="how-section"
@@ -377,17 +421,15 @@ function Home() {
               How It Works
             </h2>
 
-            <div className="heading-line">
-              <span></span>
-              <b>✦</b>
-              <span></span>
-            </div>
+            <span>
+              From your phone to your plate in
+              just a few simple steps.
+            </span>
 
           </div>
 
 
           <div className="steps-container">
-
 
             {/* STEP 1 */}
 
@@ -406,7 +448,7 @@ function Home() {
               </h3>
 
               <p>
-                Browse our available meals,
+                Browse the available meals,
                 choose what you want and add
                 it to your cart.
               </p>
@@ -464,7 +506,7 @@ function Home() {
               <p>
                 Present your verified order and
                 collect your freshly prepared meal
-                without the long wait.
+                without unnecessary waiting.
               </p>
 
             </div>
@@ -474,69 +516,70 @@ function Home() {
         </section>
 
 
-        {/* =================================================
-            ABOUT SECTION
-        ================================================= */}
+        {/* ==================================================
+            ABOUT
+        ================================================== */}
 
         <section
           className="about-section"
           id="about"
         >
 
-          <div className="about-image">
+          <div className="about-content">
 
-            <img
-              src={heroImg}
-              alt="JOOUST cafeteria meal"
-            />
+            <p className="section-label">
+              ABOUT THE CAFETERIA
+            </p>
+
+
+            <h2>
+              Better Food.
+              <br />
+              Better Experience.
+            </h2>
+
+
+            <p>
+              The JOOUST Smart Cafeteria is designed
+              to make getting your meals easier,
+              faster and more convenient.
+            </p>
+
+
+            <p>
+              Instead of spending valuable time
+              standing in long queues, students can
+              browse the menu, place their orders
+              and make payments digitally.
+            </p>
 
           </div>
 
 
-          <div className="about-content">
+          <div className="about-highlight">
 
-            <p className="section-label">
-              ABOUT US
-            </p>
+            <div className="about-icon">
+              ⚡
+            </div>
 
-            <h2>
-              A Better Way
-              <br />
-              To Enjoy Your Meals
-            </h2>
+
+            <h3>
+              Less Waiting
+            </h3>
+
 
             <p>
-
-              JOOUST Smart Cafeteria is designed
-              to make getting your meals easier,
-              faster and more convenient.
-
+              More time for what matters.
             </p>
-
-            <p>
-
-              Browse the available meals, place
-              your order and pay securely before
-              collecting your food.
-
-            </p>
-
-
-            <Link
-              to="/menu"
-              className="about-button"
-            >
-              Explore Menu →
-            </Link>
 
           </div>
 
         </section>
 
 
-        {/* =================================================
-            CONTACT / OPENING HOURS
-        ================================================= */}
+        {/* ==================================================
+            CONTACT
+        ================================================== */}
 
         <section
           className="contact-section"
@@ -545,14 +588,12 @@ function Home() {
 
           <div className="contact-card">
 
-
-            {/* OPENING HOURS */}
-
             <div className="contact-item">
 
               <div className="contact-icon">
                 🕐
               </div>
+
 
               <div>
 
@@ -560,9 +601,11 @@ function Home() {
                   OPENING HOURS
                 </span>
 
+
                 <h3>
                   6:00 AM — 9:00 PM
                 </h3>
+
 
                 <p>
                   Monday — Sunday
@@ -576,13 +619,12 @@ function Home() {
             <div className="contact-divider"></div>
 
 
-            {/* CALL US */}
-
             <div className="contact-item">
 
               <div className="contact-icon">
                 ☎
               </div>
+
 
               <div>
 
@@ -590,9 +632,11 @@ function Home() {
                   CALL US
                 </span>
 
+
                 <h3>
                   +254 700 000 000
                 </h3>
+
 
                 <p>
                   We're happy to help
@@ -609,9 +653,9 @@ function Home() {
       </main>
 
 
-      {/* =================================================
+      {/* ====================================================
           FOOTER
-      ================================================= */}
+      ==================================================== */}
 
       <footer className="footer">
 
@@ -620,6 +664,7 @@ function Home() {
           <div className="brand-logo">
             J
           </div>
+
 
           <div>
 
@@ -659,9 +704,17 @@ function Home() {
 
         <div className="footer-social">
 
-          <span>f</span>
-          <span>◎</span>
-          <span>in</span>
+          <span>
+            f
+          </span>
+
+          <span>
+            ◎
+          </span>
+
+          <span>
+            in
+          </span>
 
         </div>
 
@@ -676,14 +729,13 @@ function Home() {
       </footer>
 
     </div>
-
-  )
+  );
 }
 
 
-// =====================================================
+// ==========================================================
 // MAIN APP
-// =====================================================
+// ==========================================================
 
 function App() {
 
@@ -695,24 +747,79 @@ function App() {
 
         <Routes>
 
+          {/* ==================================================
+              HOME
+          ================================================== */}
+
           <Route
             path="/"
             element={<Home />}
           />
+
+
+          {/* ==================================================
+              MENU
+          ================================================== */}
 
           <Route
             path="/menu"
             element={<Menu />}
           />
 
+
+          {/* ==================================================
+              CART
+          ================================================== */}
+
           <Route
             path="/cart"
             element={<Cart />}
           />
 
+
+          {/* ==================================================
+              CHECKOUT
+          ================================================== */}
+
           <Route
             path="/checkout"
             element={<Checkout />}
+          />
+
+
+          {/* ==================================================
+              STUDENT AUTHENTICATION
+          ================================================== */}
+
+          <Route
+            path="/student-login"
+            element={<StudentLogin />}
+          />
+
+
+          <Route
+            path="/student-signup"
+            element={<StudentSignup />}
+          />
+
+
+          {/* ==================================================
+              STUDENT DASHBOARD
+          ================================================== */}
+
+          <Route
+            path="/student-dashboard"
+            element={<StudentDashboard />}
+          />
+
+
+          {/* ==================================================
+              ADMIN AUTHENTICATION
+          ================================================== */}
+
+          <Route
+            path="/admin-login"
+            element={<AdminLogin />}
           />
 
         </Routes>
@@ -721,8 +828,8 @@ function App() {
 
     </BrowserRouter>
 
-  )
+  );
 }
 
 
-export default App
+export default App;
