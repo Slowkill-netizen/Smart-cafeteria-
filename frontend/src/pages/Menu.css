@@ -1,0 +1,422 @@
+/* ==========================================
+   MENU PAGE
+========================================== */
+
+.menu-page {
+  min-height: 100vh;
+  padding: 50px 7% 120px;
+
+  background: #f7f7f5;
+
+  color: #18231e;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.menu-header {
+  max-width: 1000px;
+  margin: 0 auto 35px;
+}
+
+.menu-label {
+  margin-bottom: 10px;
+
+  color: #d09e1b;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.menu-header h1 {
+  margin-bottom: 10px;
+
+  color: #164a35;
+
+  font-size: 48px;
+}
+
+.menu-subtitle {
+  color: #69736d;
+  font-size: 16px;
+}
+
+
+/* ==========================================
+   CATEGORY BUTTONS
+========================================== */
+
+.category-buttons {
+  max-width: 1000px;
+
+  margin: 0 auto 45px;
+
+  display: flex;
+  gap: 12px;
+
+  overflow-x: auto;
+
+  padding-bottom: 5px;
+}
+
+.category-buttons button {
+  min-width: 120px;
+
+  padding: 13px 20px;
+
+  border: 1px solid #d9dfda;
+  border-radius: 7px;
+
+  background: white;
+
+  color: #405047;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.category-buttons button:hover {
+  border-color: #164a35;
+  color: #164a35;
+}
+
+.category-buttons .active-category {
+  background: #164a35;
+  border-color: #164a35;
+  color: white;
+}
+
+
+/* ==========================================
+   CATEGORY SECTION
+========================================== */
+
+.category-section {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.category-heading {
+  margin-bottom: 25px;
+
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.category-heading p {
+  margin-bottom: 5px;
+
+  color: #d09e1b;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.category-heading h2 {
+  color: #164a35;
+  font-size: 32px;
+}
+
+.category-heading > span {
+  color: #69736d;
+  font-size: 14px;
+}
+
+
+/* ==========================================
+   MEAL GRID
+========================================== */
+
+.meal-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 24px;
+}
+
+
+/* ==========================================
+   MEAL CARD
+========================================== */
+
+.meal-card {
+  overflow: hidden;
+
+  border: 1px solid #e1e5e1;
+  border-radius: 12px;
+
+  background: white;
+
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.meal-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.09);
+}
+
+
+/* ==========================================
+   MEAL IMAGE
+========================================== */
+
+.meal-image {
+  height: 190px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e7eee8,
+      #f5f2e5
+    );
+}
+
+.meal-image span {
+  font-size: 75px;
+}
+
+
+/* ==========================================
+   MEAL INFORMATION
+========================================== */
+
+.meal-information {
+  padding: 22px;
+}
+
+.meal-category {
+  margin-bottom: 7px;
+
+  color: #d09e1b;
+
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.meal-information h2 {
+  margin-bottom: 8px;
+
+  color: #18231e;
+
+  font-size: 21px;
+}
+
+.meal-information p {
+  min-height: 50px;
+
+  margin-bottom: 20px;
+
+  color: #69736d;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* ==========================================
+   PRICE + ADD BUTTON
+========================================== */
+
+.meal-bottom {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.meal-bottom strong {
+  color: #164a35;
+
+  font-size: 18px;
+}
+
+.add-button {
+  padding: 9px 15px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #164a35;
+
+  color: white;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.add-button:hover {
+  background: #0f3828;
+}
+
+
+/* ==========================================
+   FLOATING CART
+========================================== */
+
+.floating-cart {
+  position: fixed;
+
+  right: 25px;
+  bottom: 25px;
+
+  z-index: 1000;
+
+  min-width: 175px;
+
+  padding: 14px 18px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #164a35;
+
+  color: white;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.2);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.floating-cart:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.cart-icon {
+  font-size: 24px;
+}
+
+.cart-text {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+}
+
+.cart-text strong {
+  font-size: 14px;
+}
+
+.cart-text small {
+  margin-top: 2px;
+
+  color: #dce9e1;
+
+  font-size: 11px;
+}
+
+.cart-count {
+  min-width: 25px;
+  height: 25px;
+
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #d7a72b;
+
+  color: #18231e;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 900px) {
+
+  .meal-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .menu-page {
+    padding:
+      35px 5% 110px;
+  }
+
+  .menu-header h1 {
+    font-size: 38px;
+  }
+
+  .category-buttons {
+    margin-bottom: 35px;
+  }
+
+  .category-buttons button {
+    min-width: 105px;
+  }
+
+  .category-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 7px;
+  }
+
+  .meal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .floating-cart {
+    right: 15px;
+    bottom: 15px;
+
+    min-width: 155px;
+  }
+
+}
