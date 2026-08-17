@@ -18,7 +18,10 @@ import StudentDashboard from "./pages/StudentDashboard";
 import AdminLogin from "./pages/AdminLogin";
 
 import { CartProvider } from "./context/CartContext";
-
+import StudentProfile from "./pages/StudentProfile";
+import StudentSettings from "./pages/StudentSettings";
+import StudentOrders from "./pages/StudentOrders";
+import PaymentProcessing from "./pages/PaymentProcessing";
 
 // ==========================================================
 // HOME / LANDING PAGE
@@ -311,7 +314,7 @@ function Home() {
                   href="#how-it-works"
                   className="secondary-button"
                 >
-                  How It Works
+                  See How It Works
                 </a>
 
               </div>
@@ -328,7 +331,7 @@ function Home() {
                   </span>
 
                   <span>
-                    Fresh Meals
+                    Freshly Prepared
                   </span>
 
                 </div>
@@ -360,6 +363,19 @@ function Home() {
                 </div>
 
               </div>
+              <div className="cafeteria-status">
+
+  <span className="cafeteria-status-dot"></span>
+
+  <span>
+    Cafeteria is <strong>Open Today</strong>
+  </span>
+
+</div>
+
+<p className="hero-welcome-note">
+  Your meals, your way — made easier for your busy campus day.
+</p>
 
             </div>
 
@@ -444,7 +460,7 @@ function Home() {
               </div>
 
               <h3>
-                Make Your Order
+                Choose Your Meal
               </h3>
 
               <p>
@@ -472,13 +488,11 @@ function Home() {
               </div>
 
               <h3>
-                Make Payment
+                Pay Securely
               </h3>
 
               <p>
-                Pay securely using your preferred
-                payment method and receive your
-                digital order confirmation.
+              Confirm your order and pay securely using your preferred payment method.
               </p>
 
             </div>
@@ -504,9 +518,7 @@ function Home() {
               </h3>
 
               <p>
-                Present your verified order and
-                collect your freshly prepared meal
-                without unnecessary waiting.
+             Head to the cafeteria when your order is ready, collect your meal and enjoy.
               </p>
 
             </div>
@@ -812,6 +824,25 @@ function App() {
             element={<StudentDashboard />}
           />
 
+          <Route
+  path="/student-profile"
+  element={<StudentProfile />}
+/>
+
+<Route
+  path="/student-settings"
+  element={<StudentSettings />}
+/>
+
+<Route
+  path="/student-orders"
+  element={<StudentOrders />}
+/>
+
+<Route
+  path="/payment-processing"
+  element={<PaymentProcessing />}
+/>
 
           {/* ==================================================
               ADMIN AUTHENTICATION
