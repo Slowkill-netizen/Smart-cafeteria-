@@ -1,84 +1,225 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./StudentSignup.css";
+
+import signupFood from "../assets/Login/signup-food.jpg";
+
+// ==========================================================
+// STUDENT SIGNUP
+// ==========================================================
 
 function StudentSignup() {
   const navigate = useNavigate();
 
+  // ========================================================
+  // FORM STATES
+  // ========================================================
+
   const [fullName, setFullName] = useState("");
-  const [registrationNumber, setRegistrationNumber] = useState("");
+  const [registrationNumber, setRegistrationNumber] =
+    useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] =
+    useState("");
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] =
+    useState(false);
+
   const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
+
+  const [agreeTerms, setAgreeTerms] =
     useState(false);
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  // ========================================================
+  // FORM SUBMISSION
+  // ========================================================
+
+  const handleSubmit = (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     setError("");
     setSuccess("");
 
-    // ==========================================
-    // CHECK PASSWORD MATCH
-    // ==========================================
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+    // ======================================================
+    // CHECK REQUIRED FIELDS
+    // ======================================================
+
+    if (
+      !fullName.trim() ||
+      !registrationNumber.trim() ||
+      !email.trim() ||
+      !phone.trim() ||
+      !password.trim() ||
+      !confirmPassword.trim()
+    ) {
+      setError(
+        "Please complete all required fields."
+      );
+
       return;
     }
 
-    // ==========================================
+
+    // ======================================================
     // CHECK PASSWORD LENGTH
-    // ==========================================
+    // ======================================================
 
     if (password.length < 8) {
-      setError("Password must be at least 8 characters long.");
+      setError(
+        "Password must be at least 8 characters long."
+      );
+
       return;
     }
 
-    // ==========================================
+
+    // ======================================================
+    // CHECK PASSWORD MATCH
+    // ======================================================
+
+    if (password !== confirmPassword) {
+      setError(
+        "Passwords do not match."
+      );
+
+      return;
+    }
+
+
+    // ======================================================
+    // CHECK PHONE NUMBER
+    // ======================================================
+
+    const cleanPhone =
+      phone.replace(/\s+/g, "");
+
+
+    if (
+      !/^(07|01)\d{8}$/.test(cleanPhone)
+    ) {
+      setError(
+        "Please enter a valid Kenyan phone number."
+      );
+
+      return;
+    }
+
+
+    // ======================================================
+    // CHECK TERMS
+    // ======================================================
+
+    if (!agreeTerms) {
+      setError(
+        "Please accept the terms and conditions."
+      );
+
+      return;
+    }
+
+
+    // ======================================================
     // TEMPORARY FRONTEND REGISTRATION
-    // ==========================================
+    // ======================================================
+    // The backend will eventually handle the actual
+    // account creation.
 
-    console.log("Student registration:", {
-      fullName,
-      registrationNumber,
-      email,
-      phone,
-    });
+    console.log(
+      "Student registration:",
+      {
+        fullName,
+        registrationNumber,
+        email,
+        phone: cleanPhone,
+      }
+    );
 
-    // ==========================================
+
+    // ======================================================
     // SUCCESS
-    // ==========================================
+    // ======================================================
 
     setSuccess(
       "Account created successfully! Redirecting to login..."
     );
 
-    // ==========================================
+
+    // ======================================================
     // REDIRECT TO LOGIN
-    // ==========================================
+    // ======================================================
 
     setTimeout(() => {
       navigate("/student-login");
     }, 1500);
   };
 
+
+  // ========================================================
+  // PAGE
+  // ========================================================
+
   return (
-    <div className="auth-page">
+    <div className="auth-page signup-page">
 
-      <div className="auth-card">
 
-        {/* ==========================================
+      {/* ====================================================
+          FOOD IMAGE
+      ==================================================== */}
+
+      <div className="signup-food-image">
+
+        <img
+          src={signupFood}
+          alt="Food served at JOOUST Smart Cafeteria"
+        />
+
+        <div className="signup-image-overlay">
+
+          <div className="signup-image-content">
+
+            <p>
+              JOOUST SMART CAFETERIA
+            </p>
+
+            <h2>
+              Good food.
+              <br />
+              Good mood.
+            </h2>
+
+            <span>
+              Create your account and enjoy
+              convenient cafeteria ordering.
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* ====================================================
+          SIGNUP CARD
+      ==================================================== */}
+
+      <div className="auth-card signup-card">
+
+
+        {/* ==================================================
             BRAND
-        ========================================== */}
+        ================================================== */}
 
         <div className="auth-brand">
 
@@ -101,9 +242,9 @@ function StudentSignup() {
         </div>
 
 
-        {/* ==========================================
+        {/* ==================================================
             HEADING
-        ========================================== */}
+        ================================================== */}
 
         <div className="auth-heading">
 
@@ -123,9 +264,9 @@ function StudentSignup() {
         </div>
 
 
-        {/* ==========================================
+        {/* ==================================================
             ERROR MESSAGE
-        ========================================== */}
+        ================================================== */}
 
         {error && (
           <div className="auth-error">
@@ -134,9 +275,9 @@ function StudentSignup() {
         )}
 
 
-        {/* ==========================================
+        {/* ==================================================
             SUCCESS MESSAGE
-        ========================================== */}
+        ================================================== */}
 
         {success && (
           <div className="auth-success">
@@ -145,18 +286,19 @@ function StudentSignup() {
         )}
 
 
-        {/* ==========================================
+        {/* ==================================================
             SIGNUP FORM
-        ========================================== */}
+        ================================================== */}
 
         <form
-          className="auth-form"
+          className="auth-form signup-form"
           onSubmit={handleSubmit}
         >
 
-          {/* ========================================
+
+          {/* ================================================
               FULL NAME
-          ======================================== */}
+          ================================================= */}
 
           <div className="form-group">
 
@@ -172,15 +314,16 @@ function StudentSignup() {
               onChange={(e) =>
                 setFullName(e.target.value)
               }
+              autoComplete="name"
               required
             />
 
           </div>
 
 
-          {/* ========================================
+          {/* ================================================
               REGISTRATION NUMBER
-          ======================================== */}
+          ================================================= */}
 
           <div className="form-group">
 
@@ -194,7 +337,9 @@ function StudentSignup() {
               placeholder="e.g. C01/1234/2023"
               value={registrationNumber}
               onChange={(e) =>
-                setRegistrationNumber(e.target.value)
+                setRegistrationNumber(
+                  e.target.value
+                )
               }
               required
             />
@@ -202,9 +347,9 @@ function StudentSignup() {
           </div>
 
 
-          {/* ========================================
+          {/* ================================================
               EMAIL
-          ======================================== */}
+          ================================================= */}
 
           <div className="form-group">
 
@@ -220,15 +365,16 @@ function StudentSignup() {
               onChange={(e) =>
                 setEmail(e.target.value)
               }
+              autoComplete="email"
               required
             />
 
           </div>
 
 
-          {/* ========================================
+          {/* ================================================
               PHONE
-          ======================================== */}
+          ================================================= */}
 
           <div className="form-group">
 
@@ -244,15 +390,16 @@ function StudentSignup() {
               onChange={(e) =>
                 setPhone(e.target.value)
               }
+              autoComplete="tel"
               required
             />
 
           </div>
 
 
-          {/* ========================================
+          {/* ================================================
               PASSWORD
-          ======================================== */}
+          ================================================= */}
 
           <div className="form-group">
 
@@ -274,6 +421,7 @@ function StudentSignup() {
                 onChange={(e) =>
                   setPassword(e.target.value)
                 }
+                autoComplete="new-password"
                 required
               />
 
@@ -281,7 +429,9 @@ function StudentSignup() {
                 type="button"
                 className="show-password"
                 onClick={() =>
-                  setShowPassword(!showPassword)
+                  setShowPassword(
+                    !showPassword
+                  )
                 }
                 aria-label={
                   showPassword
@@ -289,7 +439,9 @@ function StudentSignup() {
                     : "Show password"
                 }
               >
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword
+                  ? "🙈"
+                  : "👁️"}
               </button>
 
             </div>
@@ -297,9 +449,9 @@ function StudentSignup() {
           </div>
 
 
-          {/* ========================================
+          {/* ================================================
               CONFIRM PASSWORD
-          ======================================== */}
+          ================================================= */}
 
           <div className="form-group">
 
@@ -319,8 +471,11 @@ function StudentSignup() {
                 placeholder="Confirm your password"
                 value={confirmPassword}
                 onChange={(e) =>
-                  setConfirmPassword(e.target.value)
+                  setConfirmPassword(
+                    e.target.value
+                  )
                 }
+                autoComplete="new-password"
                 required
               />
 
@@ -338,7 +493,9 @@ function StudentSignup() {
                     : "Show password"
                 }
               >
-                {showConfirmPassword ? "🙈" : "👁️"}
+                {showConfirmPassword
+                  ? "🙈"
+                  : "👁️"}
               </button>
 
             </div>
@@ -346,15 +503,45 @@ function StudentSignup() {
           </div>
 
 
-          {/* ========================================
+          {/* ================================================
+              TERMS AND CONDITIONS
+          ================================================= */}
+
+          <div className="terms-container">
+
+            <label className="terms-label">
+
+              <input
+                type="checkbox"
+                checked={agreeTerms}
+                onChange={(e) =>
+                  setAgreeTerms(
+                    e.target.checked
+                  )
+                }
+              />
+
+              <span>
+                I agree to the terms and conditions
+              </span>
+
+            </label>
+
+          </div>
+
+
+          {/* ================================================
               CREATE ACCOUNT
-          ======================================== */}
+          ================================================= */}
 
           <button
             type="submit"
             className="auth-submit"
           >
-            Create Account
+
+            <span>
+              Create Account
+            </span>
 
             <span>
               →
@@ -365,9 +552,9 @@ function StudentSignup() {
         </form>
 
 
-        {/* ==========================================
+        {/* ==================================================
             LOGIN LINK
-        ========================================== */}
+        ================================================== */}
 
         <div className="auth-switch">
 
@@ -382,9 +569,9 @@ function StudentSignup() {
         </div>
 
 
-        {/* ==========================================
+        {/* ==================================================
             ADMIN LOGIN
-        ========================================== */}
+        ================================================== */}
 
         <div className="admin-login-link">
 
@@ -399,9 +586,9 @@ function StudentSignup() {
         </div>
 
 
-        {/* ==========================================
+        {/* ==================================================
             BACK HOME
-        ========================================== */}
+        ================================================== */}
 
         <Link
           to="/"
@@ -410,10 +597,16 @@ function StudentSignup() {
           ← Back to Home
         </Link>
 
+
       </div>
 
     </div>
   );
 }
+
+
+// ==========================================================
+// DEFAULT EXPORT
+// ==========================================================
 
 export default StudentSignup;

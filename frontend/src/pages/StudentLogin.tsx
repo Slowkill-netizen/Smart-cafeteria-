@@ -1,8 +1,20 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./StudentLogin.css";
+
+import loginFood from "../assets/Login/login-food.jpg";
+
+
+// ==========================================================
+// STUDENT LOGIN
+// ==========================================================
 
 function StudentLogin() {
   const navigate = useNavigate();
+
+  // ========================================================
+  // FORM STATES
+  // ========================================================
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +25,11 @@ function StudentLogin() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+
+  // ========================================================
+  // LOGIN FUNCTION
+  // ========================================================
+
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -21,9 +38,10 @@ function StudentLogin() {
     setError("");
     setSuccess("");
 
-    // ==========================================
+
+    // ======================================================
     // CHECK EMPTY FIELDS
-    // ==========================================
+    // ======================================================
 
     if (!email.trim() || !password.trim()) {
       setError(
@@ -34,23 +52,22 @@ function StudentLogin() {
     }
 
 
-    // ==========================================
+    // ======================================================
     // TEMPORARY LOGIN CREDENTIALS
-    // ==========================================
+    // ======================================================
 
     const demoEmail = "student@jooust.ac.ke";
     const demoPassword = "12345678";
 
 
-    // ==========================================
+    // ======================================================
     // CHECK LOGIN
-    // ==========================================
+    // ======================================================
 
     if (
       email.trim().toLowerCase() !== demoEmail ||
       password !== demoPassword
     ) {
-
       setError(
         "Invalid student email or password."
       );
@@ -59,13 +76,16 @@ function StudentLogin() {
     }
 
 
-    // ==========================================
+    // ======================================================
     // SUCCESSFUL LOGIN
-    // ==========================================
+    // ======================================================
 
-    console.log("Student login successful:", {
-      email,
-    });
+    console.log(
+      "Student login successful:",
+      {
+        email,
+      }
+    );
 
 
     setSuccess(
@@ -73,9 +93,9 @@ function StudentLogin() {
     );
 
 
-    // ==========================================
+    // ======================================================
     // REDIRECT TO DASHBOARD
-    // ==========================================
+    // ======================================================
 
     setTimeout(() => {
       navigate("/student-dashboard");
@@ -83,16 +103,38 @@ function StudentLogin() {
   };
 
 
-  return (
+  // ========================================================
+  // PAGE
+  // ========================================================
 
+  return (
     <div className="auth-page">
+
+
+      {/* ====================================================
+          FOOD IMAGE
+      ==================================================== */}
+
+      <div className="login-food-image">
+
+        <img
+          src={loginFood}
+          alt="Food served at JOOUST Smart Cafeteria"
+        />
+
+      </div>
+
+
+      {/* ====================================================
+          LOGIN CARD
+      ==================================================== */}
 
       <div className="auth-card">
 
 
-        {/* ==========================================
+        {/* ==================================================
             BRAND
-        ========================================== */}
+        ================================================== */}
 
         <div className="auth-brand">
 
@@ -115,9 +157,9 @@ function StudentLogin() {
         </div>
 
 
-        {/* ==========================================
+        {/* ==================================================
             HEADING
-        ========================================== */}
+        ================================================== */}
 
         <div className="auth-heading">
 
@@ -137,9 +179,9 @@ function StudentLogin() {
         </div>
 
 
-        {/* ==========================================
-            ERROR
-        ========================================== */}
+        {/* ==================================================
+            ERROR MESSAGE
+        ================================================== */}
 
         {error && (
           <div className="auth-error">
@@ -148,9 +190,9 @@ function StudentLogin() {
         )}
 
 
-        {/* ==========================================
-            SUCCESS
-        ========================================== */}
+        {/* ==================================================
+            SUCCESS MESSAGE
+        ================================================== */}
 
         {success && (
           <div className="auth-success">
@@ -159,9 +201,9 @@ function StudentLogin() {
         )}
 
 
-        {/* ==========================================
+        {/* ==================================================
             LOGIN FORM
-        ========================================== */}
+        ================================================== */}
 
         <form
           className="auth-form"
@@ -169,9 +211,9 @@ function StudentLogin() {
         >
 
 
-          {/* ========================================
+          {/* ================================================
               EMAIL
-          ======================================== */}
+          ================================================= */}
 
           <div className="form-group">
 
@@ -193,32 +235,18 @@ function StudentLogin() {
           </div>
 
 
-          {/* ========================================
+          {/* ================================================
               PASSWORD
-          ======================================== */}
+          ================================================= */}
 
           <div className="form-group">
 
-            <div className="password-label">
+            <label htmlFor="password">
+              Password
+            </label>
 
-              <label htmlFor="password">
-                Password
-              </label>
 
-              <button
-                type="button"
-                className="forgot-password"
-                onClick={() =>
-                  setError(
-                    "Password reset will be connected later."
-                  )
-                }
-              >
-                Forgot password?
-              </button>
-
-            </div>
-
+            {/* PASSWORD INPUT */}
 
             <div className="password-input">
 
@@ -249,7 +277,28 @@ function StudentLogin() {
                     : "Show password"
                 }
               >
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword
+                  ? "🙈"
+                  : "👁️"}
+              </button>
+
+            </div>
+
+
+            {/* FORGOT PASSWORD */}
+
+            <div className="forgot-password-container">
+
+              <button
+                type="button"
+                className="forgot-password"
+                onClick={() =>
+                  setError(
+                    "Password reset will be connected later."
+                  )
+                }
+              >
+                Forgot password?
               </button>
 
             </div>
@@ -257,9 +306,9 @@ function StudentLogin() {
           </div>
 
 
-          {/* ========================================
+          {/* ================================================
               LOGIN BUTTON
-          ======================================== */}
+          ================================================= */}
 
           <button
             type="submit"
@@ -276,9 +325,47 @@ function StudentLogin() {
         </form>
 
 
-        {/* ==========================================
+        {/* ==================================================
+            GOOGLE LOGIN
+        ================================================== */}
+
+        <div className="google-login">
+
+          <div className="divider">
+
+            <span>
+              or
+            </span>
+
+          </div>
+
+
+          <button
+            type="button"
+            className="google-button"
+            onClick={() =>
+              setError(
+                "Google login will be connected later."
+              )
+            }
+          >
+
+            <span className="google-icon">
+              G
+            </span>
+
+            <span>
+              Continue with Google
+            </span>
+
+          </button>
+
+        </div>
+
+
+        {/* ==================================================
             SIGN UP
-        ========================================== */}
+        ================================================== */}
 
         <div className="auth-switch">
 
@@ -293,38 +380,53 @@ function StudentLogin() {
         </div>
 
 
-        {/* ==========================================
-            ADMIN LOGIN
-        ========================================== */}
+        {/* ==================================================
+            BOTTOM ACTIONS
+        ================================================== */}
 
-        <div className="admin-login-link">
+        <div className="auth-bottom-actions">
 
-          <span>
-            Cafeteria administrator?
-          </span>
 
-          <Link to="/admin-login">
-            Admin Login
+          {/* ================================================
+              ADMIN LOGIN
+          ================================================= */}
+
+          <div className="admin-login-link">
+
+            <span>
+              Cafeteria administrator?
+            </span>
+
+            <Link to="/admin-login">
+              Admin Login
+            </Link>
+
+          </div>
+
+
+          {/* ================================================
+              BACK HOME
+          ================================================= */}
+
+          <Link
+            to="/"
+            className="back-home"
+          >
+            ← Back to Home
           </Link>
 
         </div>
 
-
-        {/* ==========================================
-            BACK HOME
-        ========================================== */}
-
-        <Link
-          to="/"
-          className="back-home"
-        >
-          ← Back to Home
-        </Link>
 
       </div>
 
     </div>
   );
 }
+
+
+// ==========================================================
+// DEFAULT EXPORT
+// ==========================================================
 
 export default StudentLogin;

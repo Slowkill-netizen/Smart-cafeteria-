@@ -3,7 +3,7 @@ import {
   useContext,
   useState,
   type ReactNode,
-} from 'react'
+} from "react";
 
 
 // ======================================================
@@ -11,25 +11,28 @@ import {
 // ======================================================
 
 export type Category =
-  | 'Breakfast'
-  | 'Lunch'
-  | 'Dinner'
-  | 'Drinks'
+  | "Breakfast"
+  | "Lunch"
+  | "Dinner"
+  | "Drinks";
 
 
 export type Meal = {
-  id: number
-  name: string
-  category: Category
-  price: number
-  description: string
-  emoji: string
-}
+  id: number;
+  name: string;
+  category: Category;
+  price: number;
+  description: string;
+  emoji: string;
+
+  // Optional food image
+  image?: string;
+};
 
 
 export type CartItem = Meal & {
-  quantity: number
-}
+  quantity: number;
+};
 
 
 // ======================================================
@@ -37,16 +40,16 @@ export type CartItem = Meal & {
 // ======================================================
 
 type CartContextType = {
-  cartItems: CartItem[]
-  cartCount: number
-  cartTotal: number
+  cartItems: CartItem[];
+  cartCount: number;
+  cartTotal: number;
 
-  addToCart: (meal: Meal) => void
-  removeFromCart: (mealId: number) => void
-  increaseQuantity: (mealId: number) => void
-  decreaseQuantity: (mealId: number) => void
-  clearCart: () => void
-}
+  addToCart: (meal: Meal) => void;
+  removeFromCart: (mealId: number) => void;
+  increaseQuantity: (mealId: number) => void;
+  decreaseQuantity: (mealId: number) => void;
+  clearCart: () => void;
+};
 
 
 // ======================================================
@@ -56,7 +59,7 @@ type CartContextType = {
 const CartContext =
   createContext<CartContextType | undefined>(
     undefined
-  )
+  );
 
 
 // ======================================================
@@ -66,11 +69,11 @@ const CartContext =
 export function CartProvider({
   children,
 }: {
-  children: ReactNode
+  children: ReactNode;
 }) {
 
   const [cartItems, setCartItems] =
-    useState<CartItem[]>([])
+    useState<CartItem[]>([]);
 
 
   // ====================================================
@@ -84,8 +87,12 @@ export function CartProvider({
       const existingItem =
         currentItems.find(
           (item) => item.id === meal.id
-        )
+        );
 
+
+      // ------------------------------------------------
+      // ITEM ALREADY EXISTS
+      // ------------------------------------------------
 
       if (existingItem) {
 
@@ -96,10 +103,14 @@ export function CartProvider({
                 quantity: item.quantity + 1,
               }
             : item
-        )
+        );
 
       }
 
+
+      // ------------------------------------------------
+      // NEW ITEM
+      // ------------------------------------------------
 
       return [
         ...currentItems,
@@ -107,11 +118,11 @@ export function CartProvider({
           ...meal,
           quantity: 1,
         },
-      ]
+      ];
 
-    })
+    });
 
-  }
+  };
 
 
   // ====================================================
@@ -124,9 +135,9 @@ export function CartProvider({
       currentItems.filter(
         (item) => item.id !== mealId
       )
-    )
+    );
 
-  }
+  };
 
 
   // ====================================================
@@ -144,9 +155,9 @@ export function CartProvider({
             }
           : item
       )
-    )
+    );
 
-  }
+  };
 
 
   // ====================================================
@@ -168,9 +179,9 @@ export function CartProvider({
         .filter(
           (item) => item.quantity > 0
         )
-    )
+    );
 
-  }
+  };
 
 
   // ====================================================
@@ -178,32 +189,40 @@ export function CartProvider({
   // ====================================================
 
   const clearCart = () => {
-    setCartItems([])
-  }
+
+    setCartItems([]);
+
+  };
 
 
   // ====================================================
   // TOTAL NUMBER OF ITEMS
   // ====================================================
 
-  const cartCount = cartItems.reduce(
-    (total, item) =>
-      total + item.quantity,
-    0
-  )
+  const cartCount =
+    cartItems.reduce(
+      (total, item) =>
+        total + item.quantity,
+      0
+    );
 
 
   // ====================================================
   // TOTAL PRICE
   // ====================================================
 
-  const cartTotal = cartItems.reduce(
-    (total, item) =>
-      total +
-      item.price * item.quantity,
-    0
-  )
+  const cartTotal =
+    cartItems.reduce(
+      (total, item) =>
+        total +
+        item.price * item.quantity,
+      0
+    );
 
+
+  // ====================================================
+  // PROVIDER
+  // ====================================================
 
   return (
 
@@ -225,7 +244,8 @@ export function CartProvider({
 
     </CartContext.Provider>
 
-  )
+  );
+
 }
 
 
@@ -236,17 +256,18 @@ export function CartProvider({
 export function useCart() {
 
   const context =
-    useContext(CartContext)
+    useContext(CartContext);
 
 
   if (!context) {
 
     throw new Error(
-      'useCart must be used inside CartProvider'
-    )
+      "useCart must be used inside CartProvider"
+    );
 
   }
 
 
-  return context
+  return context;
+
 }

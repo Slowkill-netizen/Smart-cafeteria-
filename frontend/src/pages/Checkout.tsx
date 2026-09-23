@@ -1,78 +1,84 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import "./Checkout.css";
 
-import { useCart } from '../context/CartContext'
-
-import './Checkout.css'
-
+// ==========================================================
+// CHECKOUT
+// ==========================================================
 
 function Checkout() {
-
-  // ==========================================
+  // ========================================================
   // CART
-  // ==========================================
+  // ========================================================
 
   const {
     cartItems,
     cartTotal,
-  } = useCart()
+  } = useCart();
 
 
-  // ==========================================
-  // STUDENT DETAILS
-  // ==========================================
+  // ========================================================
+  // TEMPORARY STUDENT ACCOUNT DETAILS
+  // ========================================================
+  // Later, these details will come directly from the
+  // logged-in student's account/database.
 
-  const [studentName, setStudentName] =
-    useState('')
-
-  const [studentNumber, setStudentNumber] =
-    useState('')
-
-  const [phoneNumber, setPhoneNumber] =
-    useState('')
+  const student = {
+    name: "Student",
+    email: "student@jooust.ac.ke",
+    phone: "0712345678",
+  };
 
 
-  // ==========================================
+  // ========================================================
   // PAYMENT METHOD
-  // ==========================================
+  // ========================================================
 
   const [paymentMethod, setPaymentMethod] =
-    useState('M-Pesa')
+    useState<"M-Pesa" | "Cash">("M-Pesa");
 
 
-  // ==========================================
-  // HANDLE CHECKOUT
-  // ==========================================
+  // ========================================================
+  // PHONE OPTION
+  // ========================================================
 
-  const handleCheckout = (
-    event: React.FormEvent
-  ) => {
+  const [useDifferentNumber, setUseDifferentNumber] =
+    useState(false);
 
-    event.preventDefault()
-
-    // Temporary for now.
-    // Later this will send the order
-    // to our backend.
-
-    alert(
-      'Checkout information received. Payment integration will be added next.'
-    )
-  }
+  const [phoneNumber, setPhoneNumber] =
+    useState(student.phone);
 
 
-  // ==========================================
+  // ========================================================
+  // ORDER TYPE
+  // ========================================================
+
+  const [orderType, setOrderType] =
+    useState<
+      "Eat at Cafeteria" | "Take Away"
+    >("Eat at Cafeteria");
+
+
+  // ========================================================
+  // PAYMENT MESSAGE
+  // ========================================================
+
+  const [paymentMessage, setPaymentMessage] =
+    useState("");
+
+
+  // ========================================================
   // EMPTY CART
-  // ==========================================
+  // ========================================================
 
   if (cartItems.length === 0) {
-
     return (
-
       <div className="checkout-page">
 
         <div className="checkout-empty">
 
-          <div className="checkout-empty-icon">
+          <div className="empty-cart-icon">
             🛒
           </div>
 
@@ -81,284 +87,591 @@ function Checkout() {
           </h1>
 
           <p>
-            Add some meals before proceeding
-            to checkout.
+            Add some delicious meals before
+            proceeding to checkout.
           </p>
 
           <Link
             to="/menu"
-            className="checkout-primary-button"
+            className="checkout-menu-button"
           >
-            Browse Menu
+            Browse Menu →
           </Link>
 
         </div>
 
       </div>
-
-    )
+    );
   }
 
 
-  // ==========================================
-  // CHECKOUT PAGE
-  // ==========================================
+  // ========================================================
+  // PLACE ORDER
+  // ========================================================
+
+  const handlePlaceOrder = () => {
+
+    // Clear any previous message
+    setPaymentMessage("");
+
+
+    // ======================================================
+    // M-PESA
+    // ======================================================
+
+    if (paymentMethod === "M-Pesa") {
+
+      // Basic phone validation
+      const cleanPhone =
+        phoneNumber.replace(/\s+/g, "");
+
+
+      if (
+        cleanPhone.length < 10 ||
+        !/^\d+$/.test(cleanPhone)
+      ) {
+
+        setPaymentMessage(
+          "Please enter a valid M-Pesa phone number."
+        );
+
+        return;
+      }
+
+
+      // Temporary message.
+      // Actual STK Push integration will be added later.
+
+      setPaymentMessage(
+        `M-Pesa payment prompt will be sent to ${phoneNumber} for KSh ${cartTotal}.`
+      );
+
+      console.log("M-Pesa payment request:", {
+        amount: cartTotal,
+        phone: phoneNumber,
+        orderType,
+        items: cartItems,
+      });
+
+      return;
+    }
+
+
+    // ======================================================
+    // CASH PAYMENT
+    // ======================================================
+
+    setPaymentMessage(
+      "Your order has been received. Please pay at the cafeteria when collecting your meal."
+    );
+
+
+    console.log("Cash order:", {
+      student,
+      orderType,
+      items: cartItems,
+      total: cartTotal,
+    });
+  };
+
+
+  // ========================================================
+  // PAGE
+  // ========================================================
 
   return (
-
     <div className="checkout-page">
 
-      <div className="checkout-container">
+
+      {/* ====================================================
+          NAVIGATION
+      ==================================================== */}
+
+      <nav className="checkout-nav">
+
+        <Link
+          to="/cart"
+          className="checkout-back"
+        >
+          ← Back to Cart
+        </Link>
 
 
-        {/* ====================================
-            HEADER
-        ==================================== */}
+        <div className="checkout-brand">
 
-        <div className="checkout-header">
+          <div className="checkout-logo">
+            J
+          </div>
 
           <div>
 
-            <p className="checkout-label">
-              JOOUST SMART CAFETERIA
-            </p>
+            <strong>
+              JOOUST
+            </strong>
 
-            <h1>
-              Checkout
-            </h1>
+            <span>
+              SMART CAFETERIA
+            </span>
 
-            <p>
-              Confirm your details before
-              placing your order.
-            </p>
+          </div>
+
+        </div>
+
+      </nav>
+
+
+
+      {/* ====================================================
+          HEADER
+      ==================================================== */}
+
+      <header className="checkout-header">
+
+        <p>
+          ORDER & PAYMENT
+        </p>
+
+        <h1>
+          Checkout
+        </h1>
+
+        <span>
+          Review your order and choose how you would
+          like to pay.
+        </span>
+
+      </header>
+
+
+
+      {/* ====================================================
+          MAIN CONTENT
+      ==================================================== */}
+
+      <main className="checkout-container">
+
+
+        {/* ==================================================
+            LEFT SIDE
+        ================================================== */}
+
+        <section className="checkout-form-section">
+
+
+          {/* =================================================
+              STUDENT ACCOUNT
+          ================================================= */}
+
+          <div className="checkout-card">
+
+            <div className="checkout-card-heading">
+
+              <span className="checkout-step">
+                01
+              </span>
+
+              <div>
+
+                <h2>
+                  Your Account
+                </h2>
+
+                <p>
+                  Your registered account details.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div className="student-account-box">
+
+              <div className="student-account-avatar">
+                {student.name.charAt(0)}
+              </div>
+
+              <div className="student-account-details">
+
+                <strong>
+                  {student.name}
+                </strong>
+
+                <span>
+                  {student.email}
+                </span>
+
+                <span>
+                  {student.phone}
+                </span>
+
+              </div>
+
+              <Link
+                to="/student-profile"
+                className="edit-account"
+              >
+                Edit
+              </Link>
+
+            </div>
 
           </div>
 
 
-          <Link
-            to="/cart"
-            className="back-to-cart"
-          >
-            ← Back to Cart
-          </Link>
 
-        </div>
+          {/* =================================================
+              ORDER PREFERENCE
+          ================================================= */}
 
+          <div className="checkout-card">
 
-        {/* ====================================
-            CHECKOUT CONTENT
-        ==================================== */}
+            <div className="checkout-card-heading">
 
-        <div className="checkout-content">
+              <span className="checkout-step">
+                02
+              </span>
 
+              <div>
 
-          {/* ==================================
-              STUDENT INFORMATION
-          ================================== */}
+                <h2>
+                  Order Preference
+                </h2>
 
-          <form
-            className="checkout-form"
-            onSubmit={handleCheckout}
-          >
-
-            <div className="checkout-card">
-
-              <h2>
-                Student Information
-              </h2>
-
-              <p className="section-description">
-                Enter the details that will be
-                associated with this order.
-              </p>
-
-
-              {/* STUDENT NAME */}
-
-              <div className="form-group">
-
-                <label htmlFor="studentName">
-                  Full Name
-                </label>
-
-                <input
-                  id="studentName"
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={studentName}
-                  onChange={(event) =>
-                    setStudentName(
-                      event.target.value
-                    )
-                  }
-                  required
-                />
-
-              </div>
-
-
-              {/* STUDENT NUMBER */}
-
-              <div className="form-group">
-
-                <label htmlFor="studentNumber">
-                  Student Registration Number
-                </label>
-
-                <input
-                  id="studentNumber"
-                  type="text"
-                  placeholder="e.g. CICT/01/2022"
-                  value={studentNumber}
-                  onChange={(event) =>
-                    setStudentNumber(
-                      event.target.value
-                    )
-                  }
-                  required
-                />
-
-              </div>
-
-
-              {/* PHONE NUMBER */}
-
-              <div className="form-group">
-
-                <label htmlFor="phoneNumber">
-                  M-Pesa Phone Number
-                </label>
-
-                <input
-                  id="phoneNumber"
-                  type="tel"
-                  placeholder="e.g. 0712345678"
-                  value={phoneNumber}
-                  onChange={(event) =>
-                    setPhoneNumber(
-                      event.target.value
-                    )
-                  }
-                  required
-                />
+                <p>
+                  How would you like to receive your meal?
+                </p>
 
               </div>
 
             </div>
 
 
-            {/* ==================================
-                PAYMENT METHOD
-            ================================== */}
-
-            <div className="checkout-card">
-
-              <h2>
-                Payment Method
-              </h2>
-
-              <p className="section-description">
-                Select how you would like to
-                pay for your order.
-              </p>
+            <div className="order-type-options">
 
 
-              <label
+              {/* ============================================
+                  EAT AT CAFETERIA
+              ============================================ */}
+
+              <button
+                type="button"
                 className={
-                  paymentMethod === 'M-Pesa'
-                    ? 'payment-option selected'
-                    : 'payment-option'
+                  orderType === "Eat at Cafeteria"
+                    ? "order-option active"
+                    : "order-option"
                 }
+                onClick={() => {
+                  setOrderType("Eat at Cafeteria");
+                  setPaymentMessage("");
+                }}
               >
 
-                <input
-                  type="radio"
-                  name="payment"
-                  value="M-Pesa"
-                  checked={
-                    paymentMethod === 'M-Pesa'
-                  }
-                  onChange={() =>
-                    setPaymentMethod('M-Pesa')
-                  }
-                />
+                <span className="option-icon">
+                  🍽️
+                </span>
 
-                <div>
+                <span>
 
                   <strong>
-                    M-Pesa
+                    Eat at Cafeteria
                   </strong>
 
-                  <span>
-                    Pay securely using M-Pesa.
-                  </span>
+                  <small>
+                    Enjoy your meal at the cafeteria.
+                  </small>
 
-                </div>
+                </span>
 
-              </label>
+              </button>
 
 
-              <label
+
+              {/* ============================================
+                  TAKE AWAY
+              ============================================ */}
+
+              <button
+                type="button"
                 className={
-                  paymentMethod === 'Cash'
-                    ? 'payment-option selected'
-                    : 'payment-option'
+                  orderType === "Take Away"
+                    ? "order-option active"
+                    : "order-option"
                 }
+                onClick={() => {
+                  setOrderType("Take Away");
+                  setPaymentMessage("");
+                }}
               >
 
-                <input
-                  type="radio"
-                  name="payment"
-                  value="Cash"
-                  checked={
-                    paymentMethod === 'Cash'
-                  }
-                  onChange={() =>
-                    setPaymentMethod('Cash')
-                  }
-                />
+                <span className="option-icon">
+                  🥡
+                </span>
 
-                <div>
+                <span>
 
                   <strong>
-                    Cash
+                    Take Away
                   </strong>
 
-                  <span>
-                    Pay at the cafeteria counter.
-                  </span>
+                  <small>
+                    Collect your meal when ready.
+                  </small>
 
-                </div>
+                </span>
 
-              </label>
+              </button>
+
+            </div>
+
+          </div>
+
+
+
+          {/* =================================================
+              PAYMENT METHOD
+          ================================================= */}
+
+          <div className="checkout-card">
+
+            <div className="checkout-card-heading">
+
+              <span className="checkout-step">
+                03
+              </span>
+
+              <div>
+
+                <h2>
+                  Payment Method
+                </h2>
+
+                <p>
+                  Choose how you would like to pay.
+                </p>
+
+              </div>
 
             </div>
 
 
-            {/* ==================================
-                PLACE ORDER
-            ================================== */}
+
+            {/* ===============================================
+                M-PESA
+            =============================================== */}
 
             <button
-              type="submit"
-              className="place-order-button"
+              type="button"
+              className={
+                paymentMethod === "M-Pesa"
+                  ? "payment-option active"
+                  : "payment-option"
+              }
+              onClick={() => {
+                setPaymentMethod("M-Pesa");
+                setPaymentMessage("");
+              }}
             >
-              Continue to Payment
+
+              <span className="mpesa-icon">
+                M
+              </span>
+
+              <span>
+
+                <strong>
+                  M-Pesa
+                </strong>
+
+                <small>
+                  Receive a payment prompt on your phone.
+                </small>
+
+              </span>
+
+              <span className="payment-radio">
+                {paymentMethod === "M-Pesa"
+                  ? "●"
+                  : "○"}
+              </span>
+
             </button>
 
-          </form>
 
 
-          {/* ==================================
-              ORDER SUMMARY
-          ================================== */}
+            {/* ===============================================
+                M-PESA PHONE AREA
+            =============================================== */}
 
-          <aside className="checkout-summary">
+            {paymentMethod === "M-Pesa" && (
 
-            <h2>
-              Order Summary
-            </h2>
+              <div className="mpesa-payment-area">
 
+                <div className="registered-number">
+
+                  <div>
+
+                    <span>
+                      Payment will be sent to
+                    </span>
+
+                    <strong>
+                      {useDifferentNumber
+                        ? "Different number"
+                        : `••••••${student.phone.slice(-3)}`}
+                    </strong>
+
+                  </div>
+
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUseDifferentNumber(
+                        !useDifferentNumber
+                      );
+
+                      setPaymentMessage("");
+                    }}
+                  >
+                    {useDifferentNumber
+                      ? "Use registered number"
+                      : "Use another number"}
+                  </button>
+
+                </div>
+
+
+
+                {/* =========================================
+                    DIFFERENT NUMBER
+                ========================================= */}
+
+                {useDifferentNumber && (
+
+                  <div className="phone-input-area">
+
+                    <label htmlFor="mpesaPhone">
+                      M-Pesa Phone Number
+                    </label>
+
+                    <input
+                      id="mpesaPhone"
+                      type="tel"
+                      placeholder="0712345678"
+                      value={phoneNumber}
+                      onChange={(e) => {
+                        setPhoneNumber(
+                          e.target.value
+                        );
+
+                        setPaymentMessage("");
+                      }}
+                    />
+
+                    <small>
+                      The payment prompt will be sent
+                      to this number.
+                    </small>
+
+                  </div>
+
+                )}
+
+              </div>
+
+            )}
+
+
+
+            {/* ===============================================
+                CASH
+            =============================================== */}
+
+            <button
+              type="button"
+              className={
+                paymentMethod === "Cash"
+                  ? "payment-option active"
+                  : "payment-option"
+              }
+              onClick={() => {
+                setPaymentMethod("Cash");
+                setPaymentMessage("");
+              }}
+            >
+
+              <span className="cash-icon">
+                💵
+              </span>
+
+              <span>
+
+                <strong>
+                  Cash at Cafeteria
+                </strong>
+
+                <small>
+                  Pay when collecting your meal.
+                </small>
+
+              </span>
+
+              <span className="payment-radio">
+                {paymentMethod === "Cash"
+                  ? "●"
+                  : "○"}
+              </span>
+
+            </button>
+
+          </div>
+
+        </section>
+
+
+
+        {/* ==================================================
+            RIGHT SIDE — ORDER SUMMARY
+        ================================================== */}
+
+        <aside className="checkout-summary">
+
+          <div className="summary-card">
+
+
+            {/* ===============================================
+                SUMMARY HEADING
+            =============================================== */}
+
+            <div className="summary-heading">
+
+              <div>
+
+                <p>
+                  YOUR ORDER
+                </p>
+
+                <h2>
+                  Order Summary
+                </h2>
+
+              </div>
+
+              <span>
+                {cartItems.length} item
+                {cartItems.length !== 1
+                  ? "s"
+                  : ""}
+              </span>
+
+            </div>
+
+
+
+            {/* ===============================================
+                ITEMS
+            =============================================== */}
 
             <div className="checkout-items">
 
@@ -369,28 +682,40 @@ function Checkout() {
                   key={item.id}
                 >
 
-                  <div className="checkout-item-left">
+                  <div className="checkout-item-image">
 
-                    <span className="checkout-item-emoji">
-                      {item.emoji}
-                    </span>
+                    {item.image ? (
 
-                    <div>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                      />
 
-                      <strong>
-                        {item.name}
-                      </strong>
+                    ) : (
 
-                      <small>
-                        {item.quantity} × KSh {item.price}
-                      </small>
+                      <span>
+                        {item.emoji}
+                      </span>
 
-                    </div>
+                    )}
 
                   </div>
 
 
-                  <strong>
+                  <div className="checkout-item-info">
+
+                    <strong>
+                      {item.name}
+                    </strong>
+
+                    <span>
+                      Qty: {item.quantity}
+                    </span>
+
+                  </div>
+
+
+                  <strong className="checkout-item-price">
                     KSh {item.price * item.quantity}
                   </strong>
 
@@ -401,42 +726,135 @@ function Checkout() {
             </div>
 
 
-            {/* TOTAL */}
 
-            <div className="checkout-total">
+            {/* ===============================================
+                TOTAL CALCULATION
+            =============================================== */}
 
-              <span>
-                Total
-              </span>
+            <div className="summary-calculation">
 
-              <strong>
-                KSh {cartTotal}
-              </strong>
+              <div>
+
+                <span>
+                  Subtotal
+                </span>
+
+                <strong>
+                  KSh {cartTotal}
+                </strong>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Service Fee
+                </span>
+
+                <strong>
+                  KSh 0
+                </strong>
+
+              </div>
+
+
+              <div className="summary-total">
+
+                <span>
+                  Total
+                </span>
+
+                <strong>
+                  KSh {cartTotal}
+                </strong>
+
+              </div>
 
             </div>
 
 
+
+            {/* ===============================================
+                PAY / PLACE ORDER BUTTON
+            =============================================== */}
+
+            <button
+              type="button"
+              className="place-order-button"
+              onClick={handlePlaceOrder}
+            >
+
+              <span>
+
+                {paymentMethod === "M-Pesa"
+                  ? `Pay KSh ${cartTotal}`
+                  : "Place Order"}
+
+              </span>
+
+              <span>
+                →
+              </span>
+
+            </button>
+
+
+
+            {/* ===============================================
+                PAYMENT MESSAGE
+            =============================================== */}
+
+            {paymentMessage && (
+
+              <div className="payment-message">
+
+                <span>
+                  ✓
+                </span>
+
+                <p>
+                  {paymentMessage}
+                </p>
+
+              </div>
+
+            )}
+
+
+
+            {/* ===============================================
+                SECURITY
+            =============================================== */}
+
             <div className="checkout-security">
 
-              🔐
+              <span>
+                🔒
+              </span>
 
               <p>
-                Your order will receive a unique
-                digital identity after payment.
+                Your account and order information
+                is securely handled by JOOUST Smart
+                Cafeteria.
               </p>
 
             </div>
 
-          </aside>
 
-        </div>
+          </div>
 
-      </div>
+        </aside>
+
+      </main>
 
     </div>
-
-  )
+  );
 }
 
 
-export default Checkout
+// ==========================================================
+// DEFAULT EXPORT
+// ==========================================================
+
+export default Checkout;

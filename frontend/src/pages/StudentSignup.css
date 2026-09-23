@@ -1,0 +1,596 @@
+/* ==========================================================
+   STUDENT SIGNUP PAGE
+   ========================================================== */
+
+.signup-page {
+  min-height: 100vh;
+  width: 100%;
+  display: grid;
+
+  /* Image + Signup section */
+  grid-template-columns: 48% 52%;
+
+  gap: 0;
+  margin: 0;
+  padding: 0;
+
+  background: #f5f6f0;
+
+  overflow-x: hidden;
+}
+
+
+/* ==========================================================
+   FOOD IMAGE SECTION
+   ========================================================== */
+
+.signup-food-image {
+  position: relative;
+
+  width: 100%;
+  height: 100vh;
+
+  overflow: hidden;
+}
+
+
+/* Actual image */
+
+.signup-food-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+
+/* ==========================================================
+   IMAGE DARK OVERLAY
+   ========================================================== */
+
+.signup-image-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  align-items: flex-end;
+
+  padding: 50px;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.70),
+      rgba(0, 0, 0, 0.05) 65%
+    );
+}
+
+
+/* ==========================================================
+   IMAGE TEXT
+   ========================================================== */
+
+.signup-image-content {
+  max-width: 420px;
+  color: white;
+}
+
+
+.signup-image-content p {
+  margin: 0 0 12px;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+
+.signup-image-content h2 {
+  margin: 0 0 15px;
+
+  font-size: 42px;
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+
+.signup-image-content span {
+  display: block;
+
+  max-width: 350px;
+
+  font-size: 15px;
+  line-height: 1.6;
+
+  color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* ==========================================================
+   SIGNUP CARD / RIGHT SIDE
+   ========================================================== */
+
+.signup-card {
+  width: 100%;
+  max-width: none;
+
+  min-height: 100vh;
+
+  margin: 0;
+
+  padding: 45px 10% 45px;
+
+  box-sizing: border-box;
+
+  background: #f5f6f0;
+
+  border-radius: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-start;
+}
+
+
+/* ==========================================================
+   BRAND
+   ========================================================== */
+
+.signup-card .auth-brand {
+  margin-bottom: 30px;
+}
+
+
+/* ==========================================================
+   HEADING
+   ========================================================== */
+
+.signup-card .auth-heading {
+  margin-bottom: 25px;
+}
+
+
+.signup-card .auth-heading h1 {
+  margin-bottom: 10px;
+}
+
+
+.signup-card .auth-heading > p:last-child {
+  max-width: 430px;
+
+  line-height: 1.6;
+}
+
+
+/* ==========================================================
+   FORM
+   ========================================================== */
+
+.signup-form {
+  width: 100%;
+  max-width: 520px;
+}
+
+
+/* ==========================================================
+   FORM GROUP
+   ========================================================== */
+
+.signup-form .form-group {
+  margin-bottom: 18px;
+}
+
+
+/* ==========================================================
+   LABELS
+   ========================================================== */
+
+.signup-form label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* ==========================================================
+   INPUTS
+   ========================================================== */
+
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="tel"],
+.signup-form input[type="password"] {
+  width: 100%;
+
+  height: 48px;
+
+  padding: 0 15px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #d6ddd8;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.signup-form input:focus {
+  border-color: #145a43;
+
+  box-shadow:
+    0 0 0 3px rgba(20, 90, 67, 0.10);
+}
+
+
+/* ==========================================================
+   PASSWORD INPUT
+   ========================================================== */
+
+.signup-form .password-input {
+  position: relative;
+
+  width: 100%;
+}
+
+
+.signup-form .password-input input {
+  padding-right: 50px;
+}
+
+
+/* ==========================================================
+   SHOW PASSWORD
+   ========================================================== */
+
+.signup-form .show-password {
+  position: absolute;
+
+  right: 10px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 35px;
+  height: 35px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  font-size: 17px;
+}
+
+
+/* ==========================================================
+   TERMS AND CONDITIONS
+   ========================================================== */
+
+.terms-container {
+  margin-top: 3px;
+  margin-bottom: 20px;
+}
+
+
+.terms-label {
+  display: flex !important;
+
+  align-items: center;
+
+  gap: 9px;
+
+  cursor: pointer;
+
+  font-size: 13px !important;
+  font-weight: 500 !important;
+
+  color: #4d5a54;
+}
+
+
+.terms-label input[type="checkbox"] {
+  width: 16px !important;
+  height: 16px !important;
+
+  margin: 0;
+
+  accent-color: #145a43;
+
+  cursor: pointer;
+}
+
+
+/* ==========================================================
+   CREATE ACCOUNT BUTTON
+   ========================================================== */
+
+.signup-form .auth-submit {
+  width: 100%;
+
+  min-height: 50px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #145a43;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.signup-form .auth-submit:hover {
+  background: #0f4936;
+
+  transform: translateY(-1px);
+}
+
+
+/* ==========================================================
+   ERROR
+   ========================================================== */
+
+.signup-card .auth-error {
+  width: 100%;
+  max-width: 520px;
+
+  box-sizing: border-box;
+
+  margin-bottom: 15px;
+
+  padding: 11px 14px;
+
+  border-radius: 8px;
+
+  background: #fff0f0;
+  color: #b42318;
+
+  font-size: 13px;
+}
+
+
+/* ==========================================================
+   SUCCESS
+   ========================================================== */
+
+.signup-card .auth-success {
+  width: 100%;
+  max-width: 520px;
+
+  box-sizing: border-box;
+
+  margin-bottom: 15px;
+
+  padding: 11px 14px;
+
+  border-radius: 8px;
+
+  background: #edf8f1;
+  color: #146c43;
+
+  font-size: 13px;
+}
+
+
+/* ==========================================================
+   LOGIN LINK
+   ========================================================== */
+
+.signup-card .auth-switch {
+  width: 100%;
+  max-width: 520px;
+
+  margin-top: 20px;
+
+  text-align: center;
+
+  font-size: 13px;
+}
+
+
+.signup-card .auth-switch a {
+  color: #145a43;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  margin-left: 5px;
+}
+
+
+.signup-card .auth-switch a:hover {
+  text-decoration: underline;
+}
+
+
+/* ==========================================================
+   ADMIN LOGIN
+   ========================================================== */
+
+.signup-card .admin-login-link {
+  width: 100%;
+  max-width: 520px;
+
+  margin-top: 20px;
+
+  text-align: center;
+
+  font-size: 13px;
+}
+
+
+.signup-card .admin-login-link a {
+  color: #145a43;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  margin-left: 5px;
+}
+
+
+/* ==========================================================
+   BACK HOME
+   ========================================================== */
+
+.signup-card .back-home {
+  display: block;
+
+  width: fit-content;
+
+  margin: 18px auto 0;
+
+  padding: 11px 20px;
+
+  border-radius: 8px;
+
+  background: #145a43;
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.signup-card .back-home:hover {
+  background: #0f4936;
+
+  transform: translateY(-1px);
+}
+
+
+/* ==========================================================
+   TABLET
+   ========================================================== */
+
+@media (max-width: 1000px) {
+
+  .signup-page {
+    grid-template-columns: 42% 58%;
+  }
+
+  .signup-card {
+    padding: 40px 7%;
+  }
+
+  .signup-image-content h2 {
+    font-size: 34px;
+  }
+
+}
+
+
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+@media (max-width: 768px) {
+
+  .signup-page {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 100vh;
+  }
+
+
+  .signup-food-image {
+    width: 100%;
+    height: 300px;
+
+    flex-shrink: 0;
+  }
+
+
+  .signup-image-overlay {
+    padding: 30px;
+  }
+
+
+  .signup-image-content h2 {
+    font-size: 32px;
+  }
+
+
+  .signup-card {
+    width: 100%;
+    min-height: auto;
+
+    padding: 35px 25px 40px;
+  }
+
+
+  .signup-card .auth-brand {
+    margin-bottom: 25px;
+  }
+
+}
+
+
+/* ==========================================================
+   SMALL PHONES
+   ========================================================== */
+
+@media (max-width: 480px) {
+
+  .signup-food-image {
+    height: 240px;
+  }
+
+
+  .signup-image-content h2 {
+    font-size: 27px;
+  }
+
+
+  .signup-image-content span {
+    font-size: 13px;
+  }
+
+
+  .signup-card {
+    padding: 30px 20px 35px;
+  }
+
+}
